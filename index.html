@@ -2,17 +2,37 @@
 <head>
     <title>Article Adapter</title>
     <link rel="stylesheet" href="main.css">
+    <script src="interact.js"></script>
 </head>
 
 <body>
-    <h1>Article Adapter</h1>
-    <h2>About This Website</h2>
-<p>A website that adjusts the level of a difficult article in Spanish to a specified level with accordance to the ACTFL measure of language.<p>
+
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>
+                <a href="#">Level</a>
+                <ul class="dropdown">
+                    <li><a href="#">Spanish 1</a></li>
+                    <li><a href="#">Spanish 2</a></li>
+                    <li><a href="#">Spanish 3</a></li>
+                    <li><a href="#">Spanish 4</a></li>
+                </ul>
+            </li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Test</a></li>
+        </ul>
+    </nav>
+        <h1>Article Adapter</h1>
+    <h4>About This Website</h4>
+    <p>A website that adjusts the level of a difficult article in Spanish to a specified level with accordance to the ACTFL measure of language.<p>
 <!-- <label for="fname">Input Article Here:</label>
 <input type="text" id="fname" name="fname"> -->
-    <form action="/url" method="GET">
-        <p>Please enter some text below:</p>
-        <input type="text" style="width: 1000px; height: 500px;" placeholder="Your Text Here">
-    </form>
+    <!-- <form action="/url" method="GET"> -->
+    <p>Please enter some text below:</p>
+    <textarea id="message" name="inputarticle" rows="30" cols="70" placeholder="Enter your message here..."></textarea>
+    <br><br>
+    <button onclick="submitData()"> Submit </button>
+    <!-- </form> -->
 </body>
 </html>

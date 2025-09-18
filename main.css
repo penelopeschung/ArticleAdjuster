@@ -1,8 +1,61 @@
-body {
-  background-color: lightblue;
+
+body{
+  background-color: darkslategray; 
+  text-align: center;
+  font-family: Georgia, serif
+
 }
 
-h1 {
-  color: navy;
-  margin-left: 20px;
+h4{
+  color: white;
+
+}
+
+h1{
+    color: white;
+}
+
+h2{
+    color: white
+}
+
+p{
+    color: lightblue
+}
+
+ul{
+    list-style: none;
+    background:black
+}
+
+ul li{
+    display: inline-block;
+    position: relative
+}
+
+ul li a{
+    display: block;
+    padding: 20px 25px;
+    color: white;
+    text-decoration: none
+}
+
+ul li ul.dropdown li{
+    display:block;
+}
+
+ul li ul.dropdown{
+    width:100%;
+    background:blue;
+    position: absolute;
+    z-index:999;
+    display:none;
+}
+
+ul li a:hover{
+    background:green;
+}
+
+ul li:hover ul.dropdown{
+    display:block;
 }
