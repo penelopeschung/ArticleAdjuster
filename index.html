@@ -1,38 +1,37 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Article Adapter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Article Adapter</title>
     <link rel="stylesheet" href="main.css">
-    <script src="interact.js"></script>
 </head>
-
 <body>
 
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li>
-                <a href="#">Level</a>
-                <ul class="dropdown">
-                    <li><a href="#">Spanish 1</a></li>
-                    <li><a href="#">Spanish 2</a></li>
-                    <li><a href="#">Spanish 3</a></li>
-                    <li><a href="#">Spanish 4</a></li>
-                </ul>
-            </li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Test</a></li>
-        </ul>
-    </nav>
-        <h1>Article Adapter</h1>
-    <h4>About This Website</h4>
-    <p>A website that adjusts the level of a difficult article in Spanish to a specified level with accordance to the ACTFL measure of language.<p>
-<!-- <label for="fname">Input Article Here:</label>
-<input type="text" id="fname" name="fname"> -->
-    <!-- <form action="/url" method="GET"> -->
-    <p>Please enter some text below:</p>
-    <textarea id="message" name="inputarticle" rows="30" cols="70" placeholder="Enter your message here..."></textarea>
-    <br><br>
-    <button onclick="submitData()"> Submit </button>
-    <!-- </form> -->
+    <div class="container">
+        <h1>Spanish Article Adapter 🇪</h1>
+        <p>Enter a URL to fetch an article, or paste your text directly below.</p>
+
+        <div class="url-fetch-container">
+            <input type="url" id="url-input" placeholder="Enter article URL...">
+            <button id="fetch-btn">Fetch Article</button>
+        </div>
+
+        <textarea id="text-input" placeholder="Article text will appear here..."></textarea>
+
+        <div id="level-buttons">
+            <button class="level-btn" data-level="A1">Beginner (A1)</button>
+            <button class="level-btn" data-level="B1">Intermediate (B1)</button>
+            <button class="level-btn" data-level="C1">Advanced (C1)</button>
+        </div>
+
+        <h2>Adapted Text:</h2>
+        <div id="output-container">
+            <div id="text-output"></div>
+        </div>
+    </div>
+
+    <script src="interact.js"></script>
 </body>
 </html>
+
