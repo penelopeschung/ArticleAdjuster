@@ -14,9 +14,9 @@ const levelButtons = document.getElementById('level-buttons');
  * @param {string} level  target CEFR level (e.g., 'A1', 'B1').
  */
 async function adaptText(text, level) {
-    textOutput.innerText = 'Adapting text with Gemini, please wait... ';
+    textOutput.innerText = 'This may take a couple minutes, please wait... ';
 
-    const prompt = `Adapt the following Spanish text to a ${level} CEFR level. Simplify vocabulary and sentence structure, but keep the core meaning intact. Respond ONLY with the adapted Spanish text. Original Text: "${text}"`;
+    const prompt = `Adapt the following Spanish text to a ${level} ACTFL level. Simplify vocabulary and sentence structure, but keep the core meaning intact. Respond ONLY with the adapted Spanish text. Original Text: "${text}"`;
 
     try {
         const response = await fetch(API_URL, {
