@@ -1,6 +1,6 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #f4f7f9;
+    background-color: #ffd1a1;
     color: #333;
     display: flex;
     justify-content: center;
@@ -73,7 +73,7 @@ textarea {
 }
 
 .level-btn {
-    background-color: #007bff;
+    background-color: #ff7700;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -84,7 +84,7 @@ textarea {
 }
 
 .level-btn:hover {
-    background-color: #0056b3;
+    background-color: #c36100;
 }
 
 #output-container {
