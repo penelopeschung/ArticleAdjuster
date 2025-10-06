@@ -16,7 +16,7 @@ const levelButtons = document.getElementById('level-buttons');
 async function adaptText(text, level) {
     textOutput.innerText = 'This may take a couple minutes, please wait... ';
 
-    const prompt = `Adapt the following Spanish text to a ${level} ACTFL level. Simplify vocabulary and sentence structure, but keep the core meaning intact. Respond ONLY with the adapted Spanish text. Original Text: "${text}"`;
+    const prompt = `Adapt the following Spanish text to a ${level} ACTFL level, maintaining the same word count. Simplify vocabulary and sentence structure, but keep the core meaning intact. Respond ONLY with the adapted Spanish text. Original Text: "${text}"`;
 
     try {
         const response = await fetch(API_URL, {
