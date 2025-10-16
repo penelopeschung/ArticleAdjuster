@@ -1,43 +1,41 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- specifies that the page is mainly in english-->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spanish Article Adapter</title>
-    <!-- linking the css stylesheet to html -->
-    <link rel="stylesheet" href="main.css"> 
+    <link rel="stylesheet" href="main.css">
+    <script src="interact.js" defer></script> </head>
 </head>
 <body>
 
     <div class="container">
         <h1>Spanish Article Adapter</h1>
-
-        <p>This website takes Spanish articles and adapts the level according the <a href="https://theglobalseal.com/actfl-language-proficiency-levels#:~:text=There%20are%20a%20total%20of,Low%2C%20Mid%20and%20High).">ACTFL</a> standards.</p>
+        <p>This website takes Spanish articles and adapts the level according to the <a href="https://theglobalseal.com/actfl-language-proficiency-levels#:~:text=There%20are%20a%20total%20of,Low%2C%20Mid%20and%20High)." target="_blank" rel="noopener noreferrer">ACTFL</a> standards.</p>
         <p>Enter a URL to fetch an article, or paste your text directly below.</p>
-<!-- article url input area **isn't currently functional so need to incorporate website scraping at some point -->
+
         <div class="url-fetch-container">
             <input type="url" id="url-input" placeholder="Enter article URL...">
             <button id="fetch-btn">Fetch Article</button>
         </div>
 
-        <textarea id="text-input" placeholder="Article text will appear here..."></textarea>
-<!-- different buttons for each level-->
+        <textarea id="text-input" placeholder="Paste or type your Spanish article here..."></textarea>
+
         <div id="level-buttons">
-            <button class="level-btn" data-level="A1">Novice Low</button>
-            <button class="level-btn" data-level="B1">Novice High</button>
-            <button class="level-btn" data-level="A1">Intermediate Low</button>
-            <button class="level-btn" data-level="B1">Intermediate High</button>
-            <button class="level-btn" data-level="A1">Advanced Low</button>
-            <button class="level-btn" data-level="B1">Advanced High</button>
+            <button class="level-btn" data-level="Novice Low">Novice Low</button>
+            <button class="level-btn" data-level="Novice High">Novice High</button>
+            <button class="level-btn" data-level="Intermediate Low">Intermediate Low</button>
+            <button class="level-btn" data-level="Intermediate High">Intermediate High</button>
+            <button class="level-btn" data-level="Advanced Low">Advanced Low</button>
+            <button class="level-btn" data-level="Advanced High">Advanced High</button>
         </div>
-<!-- this is where the adapted article will come out -->
+
         <h2>Adapted Text:</h2>
         <div id="output-container">
             <div id="text-output"></div>
         </div>
     </div>
-<!-- linking the javascript code to make buttons/api functional -->
-    <script src="interact.js"></script>
-</body>
-</html>
 
+</body>
+
+</html>
