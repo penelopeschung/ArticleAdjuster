@@ -6,6 +6,10 @@ User Needs Statement: Yolanda, a Spanish teacher at Nueva, wants a website that 
 
 To use the website, the user first copies and pastes their text into the box. This article adjuster works by using a Gemini 2.5pro API, and prompting it for different ACTFL levels depening on the button the user clicks. It then returns the adapted text below. 
 
+Notes:
+1. I have included only levels from novice - advanced, excluding the superior and distinguished levels because from what I've read in the ACTFL guide, people who are at these levels should be able to read a normal article without needing adaptation.
+2. I also excluded the mid tier, only including low and high because I feel like there wouldn't be clear enough of a distinction between them. But, I could always add it too. 
+
 Bugs/Improvements:
 1. Currently the article adjuster is able to generally adapt the articles to different levels, but not specific enough to the ACTFL standards. We want to make the distinction more clear and have a distinct gemini prompt for each level in order to specify specific traits of the levels. 
 2. The link box where users can copy paste a link in doesn't work right now and is just a placeholder. Ideally, I want users to be able to copy paste the link of an article and then for it to be scraped and converted to text. I tried using different ai like gemini and chatgpt to scrape the websites, but it didn't work very well because there are a lot of bot blockers. 

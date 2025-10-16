@@ -22,7 +22,7 @@ const promptLibrary = {
         Original Text: "${text}"`,
 
     "Novice High": (text) => `
-        You are an expert in Spanish language pedagogy. Adapt the following Spanish text for a Novice High (ACTFL) learner.
+        Adapt the following Spanish text for a Novice High (ACTFL) learner.
         - Simplify vocabulary significantly, using words common to everyday life.
         - Structure the text using simple, learned sentences (e.g., Subject-Verb-Object).
         - Connect ideas with basic conjunctions like "y", "pero", and "porque".
@@ -31,7 +31,7 @@ const promptLibrary = {
         Original Text: "${text}"`,
 
     "Intermediate Low": (text) => `
-        You are an expert in Spanish language pedagogy. Adapt the following Spanish text for an Intermediate Low (ACTFL) learner.
+        Adapt the following Spanish text for an Intermediate Low (ACTFL) learner.
         - Use a broad but common vocabulary. Avoid slang and highly idiomatic expressions.
         - Combine and recombine sentences. Create a mix of simple and compound sentences.
         - Ensure the text is mostly in the present tense, but introduce simple past (preterite) or future tenses if essential to the core meaning.
@@ -40,30 +40,30 @@ const promptLibrary = {
         Original Text: "${text}"`,
 
     "Intermediate High": (text) => `
-        You are an expert in Spanish language pedagogy. Adapt the following Spanish text for an Intermediate High (ACTFL) learner.
+        Adapt the following Spanish text for an Intermediate High (ACTFL) learner.
         - Use varied and precise vocabulary. The learner should be able to understand the main ideas without a dictionary.
         - Create paragraph-length text. Use a variety of sentence structures and connecting words to show sequence and relationship (e.g., "entonces", "después", "sin embargo").
         - Confidently use major time frames (past, present, future) as needed to convey the original meaning.
         - The narrative should be clear and organized. Target a similar word count as the original.
-        - Respond ONLY with the adapted Spanish text.
+        - Target a similar word count as the original. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
 
     "Advanced Low": (text) => `
-        You are an expert in Spanish language pedagogy. Adapt the following Spanish text for an Advanced Low (ACTFL) learner.
+        Adapt the following Spanish text for an Advanced Low (ACTFL) learner.
         - Employ a rich and varied vocabulary, including some common idiomatic expressions.
         - Use complex sentence structures, including subordinate clauses. The flow should be smooth and natural.
         - The text must be a well-organized, paragraph-length narrative, describing events in detail across all major time frames.
         - Ensure good control of grammar and syntax. The text should be easily understood by a native speaker.
-        - Maintain the core message and tone of the original text. Respond ONLY with the adapted Spanish text.
+        - Target a similar word count as the original. Maintain the core message and tone of the original text. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
 
     "Advanced High": (text) => `
-        You are an expert in Spanish language pedagogy. Adapt the following Spanish text for an Advanced High (ACTFL) learner.
+        Adapt the following Spanish text for an Advanced High (ACTFL) learner.
         - Use sophisticated, low-frequency vocabulary and nuanced expressions appropriate to the topic.
         - Structure the text with complex, varied, and well-formed sentences. Use advanced grammatical structures, including the subjunctive mood where appropriate.
         - The text should be coherent, well-argued, and support opinions or hypotheses if present in the original.
         - Maintain the subtleties, tone, and register of the original source material.
-        - The final text should demonstrate a high command of the language, with minimal errors. Respond ONLY with the adapted Spanish text.
+        - The final text should demonstrate a high command of the language. Target a similar word count as the original.  Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`
 };
 
