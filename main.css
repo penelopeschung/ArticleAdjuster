@@ -7,7 +7,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    padding: 1rem; /* Added for smaller screens */
+    padding: 1rem; /* added for smaller screens */
 }
 
 .container {
@@ -32,7 +32,7 @@ h1, h2 {
 }
 
 #url-input {
-    flex-grow: 1; /* Allows input to take available space */
+    flex-grow: 1; /* allows input to take available space */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

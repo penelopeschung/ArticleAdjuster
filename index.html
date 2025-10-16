@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> <!-- specifies that the page is mainly in english-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spanish Article Adapter</title>
-    <link rel="stylesheet" href="main.css">
+    <!-- linking the css stylesheet to html -->
+    <link rel="stylesheet" href="main.css"> 
 </head>
 <body>
 
@@ -13,14 +14,14 @@
 
         <p>This website takes Spanish articles and adapts the level according the <a href="https://theglobalseal.com/actfl-language-proficiency-levels#:~:text=There%20are%20a%20total%20of,Low%2C%20Mid%20and%20High).">ACTFL</a> standards.</p>
         <p>Enter a URL to fetch an article, or paste your text directly below.</p>
-
+<!-- article url input area **isn't currently functional so need to incorporate website scraping at some point -->
         <div class="url-fetch-container">
             <input type="url" id="url-input" placeholder="Enter article URL...">
             <button id="fetch-btn">Fetch Article</button>
         </div>
 
         <textarea id="text-input" placeholder="Article text will appear here..."></textarea>
-
+<!-- different buttons for each level-->
         <div id="level-buttons">
             <button class="level-btn" data-level="A1">Novice Low</button>
             <button class="level-btn" data-level="B1">Novice High</button>
@@ -29,13 +30,13 @@
             <button class="level-btn" data-level="A1">Advanced Low</button>
             <button class="level-btn" data-level="B1">Advanced High</button>
         </div>
-
+<!-- this is where the adapted article will come out -->
         <h2>Adapted Text:</h2>
         <div id="output-container">
             <div id="text-output"></div>
         </div>
     </div>
-
+<!-- linking the javascript code to make buttons/api functional -->
     <script src="interact.js"></script>
 </body>
 </html>
