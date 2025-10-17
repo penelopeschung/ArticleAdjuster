@@ -2,15 +2,14 @@ const API_KEY = 'AIzaSyDhjn5A_5e-6CpRZqYFXu2KhBLkBd7yCB4';
 const MODEL_NAME = 'gemini-2.5-pro';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
 
-// --- DOM Element References ---
+// --- DOM element references ---
 const fetchBtn = document.getElementById('fetch-btn');
 const textInput = document.getElementById('text-input');
 const textOutput = document.getElementById('text-output');
 const levelButtons = document.getElementById('level-buttons');
 
-// --- Prompt Library (Corrected) ---
-// Each prompt is now a function that takes 'text' as an argument.
-// This ensures the user's text is correctly inserted into the prompt string.
+// prompt library
+// different prompts for each button, specific to different ACTFL levels
 const promptLibrary = {
     "Novice Low": (text) => `
         Adapt the following Spanish text for a Novice Low (ACTFL) learner.
@@ -68,32 +67,32 @@ const promptLibrary = {
 };
 
 /**
- * Generates a prompt by calling the appropriate function from the library.
- * @param {string} level - The target ACTFL level (e.g., "Novice Low").
- * @param {string} text - The original Spanish text.
- * @returns {string} The customized prompt for the API.
+ * generate a prompt by calling the appropriate function from the library.
+ * @param {string} level - target ACTFL level  
+ * @param {string} text - the original spanish text
+ * @returns {string} prompt for the api
  */
 function getPrompt(level, text) {
     const promptGenerator = promptLibrary[level];
     if (typeof promptGenerator === 'function') {
-        // Call the function for the selected level and pass the text to it.
+        // call the function for the selected level and pass the text to it
         return promptGenerator(text);
     }
-    // Fallback in case the level doesn't exist.
+    //  in case the level doesn't exist.
     console.error(`No prompt generator found for level: ${level}`);
     return '';
 }
 
 
 /**
- * @param {string} text  The original Spanish text.
- * @param {string} level The target ACTFL level.
+ * @param {string} text   original spanish text
+ * @param {string} level the target ACTFL level
  */
 async function adaptText(text, level) {
     textOutput.innerText = 'Adapting the text, please wait... This may take a few seconds.';
 
     const prompt = getPrompt(level, text);
-    if (!prompt) { // Stop if the prompt couldn't be generated
+    if (!prompt) { // stop if the prompt couldn't be generated
         textOutput.innerText = 'Error: Could not generate a valid prompt for the selected level.';
         return;
     }
@@ -123,7 +122,7 @@ async function adaptText(text, level) {
              const adaptedText = data.candidates[0].content.parts[0].text;
              textOutput.innerText = adaptedText.trim();
         } else {
-            // This handles cases where the model might refuse to answer (e.g., safety settings)
+            // cases where the model might refuse to answer - safety systems or things that the model cant answer
             const finishReason = data.candidates?.[0]?.finishReason;
             if (finishReason) {
                  throw new Error(`API call finished unexpectedly. Reason: ${finishReason}`);
@@ -139,10 +138,10 @@ async function adaptText(text, level) {
 }
 
 
-// --- EVENT LISTENERS ---
+// --- event listeners ---
 
 levelButtons.addEventListener('click', (event) => {
-    // Ensure the click is on a button and not the container div
+    // ensures the click is on a button and not the container div
     if (event.target.tagName === 'BUTTON' && event.target.classList.contains('level-btn')) {
         const text = textInput.value;
         const level = event.target.dataset.level;
