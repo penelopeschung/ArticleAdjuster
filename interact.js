@@ -1,44 +1,15 @@
-// --- Imports ---
-const express = require('express');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const axios = require('axios');
-const cheerio = require('cheerio');
-
-// --- Configuration ---
-dotenv.config();
-const app = express();
-const PORT = process.env.PORT || 3000;
+const API_KEY = 'AIzaSyDhjn5A_5e-6CpRZqYFXu2KhBLkBd7yCB4'; 
 const MODEL_NAME = 'gemini-2.5-pro';
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
 
-// --- Security: Configure CORS ---
-const allowedOrigins = [
-    process.env.FRONTEND_URL || 'https://article-adjuster-4447a3.netlify.app',
-    'http://127.0.0.1:5500', // For VSC Live Server
-    'http://localhost:5500' // For VSC Live Server
-];
+// --- DOM element references ---
+const fetchBtn = document.getElementById('fetch-btn');
+const textInput = document.getElementById('text-input');
+const textOutput = document.getElementById('text-output');
+const levelButtons = document.getElementById('level-buttons');
 
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
-
-// --- Middleware ---
-app.use(express.json()); // To parse JSON request bodies
-
-// --- Initialize Google AI Client ---
-// this is now done on the server (more secure)
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-
-// --- Prompt Library (copied from interact.js) ---
-// this logic also moved to the backend/server
+// prompt library
+// different prompts for each button, specific to different ACTFL levels
 const promptLibrary = {
     "Novice Low": (text) => `
         Adapt the following Spanish text for a Novice Low (ACTFL) learner.
@@ -48,6 +19,7 @@ const promptLibrary = {
         - The output should feel like basic building blocks of the language.
         - Do NOT include any English explanations. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
+
     "Novice High": (text) => `
         Adapt the following Spanish text for a Novice High (ACTFL) learner.
         - Simplify vocabulary significantly, using words common to everyday life.
@@ -56,6 +28,7 @@ const promptLibrary = {
         - The text should be understandable to someone who can ask and answer simple questions on familiar topics.
         - Do NOT include any English explanations. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
+
     "Intermediate Low": (text) => `
         Adapt the following Spanish text for an Intermediate Low (ACTFL) learner.
         - Use a broad but common vocabulary. Avoid slang and highly idiomatic expressions.
@@ -64,6 +37,7 @@ const promptLibrary = {
         - The text should be straightforward and easy to follow for someone who can create with the language.
         - Target a similar word count as the original. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
+
     "Intermediate High": (text) => `
         Adapt the following Spanish text for an Intermediate High (ACTFL) learner.
         - Use varied and precise vocabulary. The learner should be able to understand the main ideas without a dictionary.
@@ -72,6 +46,7 @@ const promptLibrary = {
         - The narrative should be clear and organized. Target a similar word count as the original.
         - Target a similar word count as the original. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
+
     "Advanced Low": (text) => `
         Adapt the following Spanish text for an Advanced Low (ACTFL) learner.
         - Employ a rich and varied vocabulary, including some common idiomatic expressions.
@@ -80,6 +55,7 @@ const promptLibrary = {
         - Ensure good control of grammar and syntax. The text should be easily understood by a native speaker.
         - Target a similar word count as the original. Maintain the core message and tone of the original text. Respond ONLY with the adapted Spanish text.
         Original Text: "${text}"`,
+
     "Advanced High": (text) => `
         Adapt the following Spanish text for an Advanced High (ACTFL) learner.
         - Use sophisticated, low-frequency vocabulary and nuanced expressions appropriate to the topic.
@@ -90,103 +66,95 @@ const promptLibrary = {
         Original Text: "${text}"`
 };
 
+/**
+ * generate a prompt by calling the appropriate function from the library.
+ * @param {string} level - target ACTFL level  
+ * @param {string} text - the original spanish text
+ * @returns {string} prompt for the api
+ */
 function getPrompt(level, text) {
     const promptGenerator = promptLibrary[level];
     if (typeof promptGenerator === 'function') {
+        // call the function for the selected level and pass the text to it
         return promptGenerator(text);
     }
+    //  in case the level doesn't exist.
     console.error(`No prompt generator found for level: ${level}`);
     return '';
 }
 
-// --- API Endpoints ---
 
 /**
- * endpoint to adapt text.
- * recives: { "text": "...", "level": "..." }
- * returns: { "adaptedText": "..." }
+ * @param {string} text   original spanish text
+ * @param {string} level the target ACTFL level
  */
-app.post('/api/adapt', async (req, res) => {
-    try {
-        const { text, level } = req.body;
+async function adaptText(text, level) {
+    textOutput.innerText = 'Adapting the text, please wait... This may take a few seconds.';
 
-        if (!text || !level) {
-            return res.status(400).json({ error: 'Missing "text" or "level" in request body' });
-        }
-
-        const prompt = getPrompt(level, text);
-        if (!prompt) {
-            return res.status(400).json({ error: 'Invalid level provided' });
-        }
-
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const adaptedText = response.text();
-
-        res.json({ adaptedText: adaptedText.trim() });
-
-    } catch (error) {
-        console.error('Error in /api/adapt:', error);
-        res.status(500).json({ error: 'Failed to adapt text. ' + error.message });
+    const prompt = getPrompt(level, text);
+    if (!prompt) { // stop if the prompt couldn't be generated
+        textOutput.innerText = 'Error: Could not generate a valid prompt for the selected level.';
+        return;
     }
-});
 
-/**
- * endpoint to scrape a URL.
- * recives: { "url": "..." }
- * returns: { "scrapedText": "..." }
- */
-app.post('/api/scrape', async (req, res) => {
     try {
-        const { url } = req.body;
-
-        if (!url) {
-            return res.status(400).json({ error: 'Missing "url" in request body' });
-        }
-
-        // fetch HTML from the URL
-        // user-agent header to make it look more like a real browser
-        const { data } = await axios.get(url, {
+        const response = await fetch(API_URL, {
+            method: 'POST',
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: prompt }]
+                }],
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            const errorMessage = errorData.error?.message || `HTTP error! Status: ${response.status}`;
+            throw new Error(errorMessage);
+        }
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+             const adaptedText = data.candidates[0].content.parts[0].text;
+             textOutput.innerText = adaptedText.trim();
+        } else {
+            // cases where the model might refuse to answer - safety systems or things that the model cant answer
+            const finishReason = data.candidates?.[0]?.finishReason;
+            if (finishReason) {
+                 throw new Error(`API call finished unexpectedly. Reason: ${finishReason}`);
+            } else {
+                 throw new Error("Received an unexpected or empty response format from the API.");
             }
-        });
-
-        // Load HTML into cheerio
-        const $ = cheerio.load(data);
-
-        // extract text from paragraph tags within common article containers
-        let articleText = '';
-        $('article p, main p').each((i, elem) => {
-            articleText += $(elem).text() + '\n\n'; // add newlines for readability
-        });
-
-        // fallback if the first selector didn't find anything
-        if (!articleText) {
-            $('body p').each((i, elem) => {
-                articleText += $(elem).text() + '\n\n';
-            });
         }
-
-        if (!articleText) {
-             return res.status(404).json({ error: 'Could not extract article text. The site might be blocking scrapers or have an unusual structure.' });
-        }
-
-        res.json({ scrapedText: articleText.trim() });
 
     } catch (error) {
-        console.error('Error in /api/scrape:', error);
-        let errorMessage = 'Failed to scrape URL. ';
-        if (error.response) {
-            errorMessage += `Status: ${error.response.status}`; // e.g., 404, 403
-        } else {
-            errorMessage += error.message;
+        console.error('Error adapting text:', error);
+        textOutput.innerText = `Sorry, an error occurred: ${error.message}`;
+    }
+}
+
+
+// --- event listeners ---
+
+levelButtons.addEventListener('click', (event) => {
+    // ensures the click is on a button and not the container div
+    if (event.target.tagName === 'BUTTON' && event.target.classList.contains('level-btn')) {
+        const text = textInput.value;
+        const level = event.target.dataset.level;
+
+        if (text.trim() === '') {
+            alert('Please enter some Spanish text into the box first.');
+            return;
         }
-        res.status(500).json({ error: errorMessage });
+        adaptText(text, level);
     }
 });
 
-// --- Start Server ---
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+
+fetchBtn.addEventListener('click', () => {
+    alert('Note: Fetching directly from a URL requires a server-side component to handle web scraping and avoid browser security (CORS) errors. This button is a placeholder.');
 });
