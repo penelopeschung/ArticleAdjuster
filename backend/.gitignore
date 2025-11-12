@@ -1,0 +1,4 @@
+# contains enviroment variables, do we do not want to publish this to github
+.env
+# dependencies shouldnt be pushed either
+node_modules/
