@@ -1,3 +1,4 @@
+require('dotenv').config();
 // --- Imports ---
 const express = require('express');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
@@ -16,11 +17,13 @@ const MODEL_NAME = 'gemini-2.5-pro';
 const allowedOrigins = [
     process.env.FRONTEND_URL || 'https://article-adjuster-4447a3.netlify.app',
     'http://127.0.0.1:5500', // For VSC Live Server
-    'http://localhost:5500' // For VSC Live Server
+    'http://localhost:5500', // For VSC Live Server
+    'http://localhost:8000'
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
+        console.log('A request was made from origin:', origin);
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {

@@ -1,6 +1,6 @@
 // --- Configuration ---
 //backend url
-const API_BASE_URL = 'http://localhost:3000'; 
+const API_BASE_URL = 'http://localhost:8000'; 
 
 // --- DOM element references ---
 const fetchBtn = document.getElementById('fetch-btn');
