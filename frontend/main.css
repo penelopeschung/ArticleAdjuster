@@ -40,7 +40,7 @@ h1, h2 {
 }
 
 #fetch-btn {
-    background-color: #28a745;
+    background-color: #24bc48;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -51,7 +51,7 @@ h1, h2 {
 }
 
 #fetch-btn:hover {
-    background-color: #218838;
+    background-color: #238c3a;
 }
 
 

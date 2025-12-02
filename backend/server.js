@@ -38,7 +38,12 @@ app.use(express.json()); // To parse JSON request bodies
 // --- Initialize Google AI Client ---
 // this is now done on the server (more secure)
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+
+// Primary, high-quality model
+const proModel = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
+
+// Fallback, high-speed model
+const flashModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 // --- Prompt Library (copied from interact.js) ---
 // this logic also moved to the backend/server
@@ -109,6 +114,11 @@ function getPrompt(level, text) {
  * recives: { "text": "...", "level": "..." }
  * returns: { "adaptedText": "..." }
  */
+/**
+ * endpoint to adapt text.
+ * recives: { "text": "...", "level": "..." }
+ * returns: { "adaptedText": "..." }
+ */
 app.post('/api/adapt', async (req, res) => {
     try {
         const { text, level } = req.body;
@@ -122,13 +132,37 @@ app.post('/api/adapt', async (req, res) => {
             return res.status(400).json({ error: 'Invalid level provided' });
         }
 
-        const result = await model.generateContent(prompt);
+        let result;
+        try {
+            // 1. Attempt to use the high-quality Pro model first
+            result = await proModel.generateContent(prompt);
+
+        } catch (error) {
+            // 2. Check if the error is a rate limit error
+            // The Google SDK throws an error with status 'RESOURCE_EXHAUSTED' for rate limits.
+            // We also check for the 429 HTTP status code just in case.
+            if (error.status === 'RESOURCE_EXHAUSTED' || (error.message && error.message.includes('429'))) {
+                
+                console.warn('Gemini Pro rate limit hit. Falling back to Gemini Flash.');
+                
+                // 3. If rate limited, fall back to the faster Flash model
+                result = await flashModel.generateContent(prompt);
+
+            } else {
+                // 4. If it's a different error, re-throw it to be caught by the outer block
+                throw error;
+            }
+        }
+
+        // 5. Process the successful result (from either Pro or Flash)
         const response = await result.response;
         const adaptedText = response.text();
 
         res.json({ adaptedText: adaptedText.trim() });
 
     } catch (error) {
+        // This will catch any errors from the validation,
+        // the Flash model, or any non-rate-limit errors from the Pro model.
         console.error('Error in /api/adapt:', error);
         res.status(500).json({ error: 'Failed to adapt text. ' + error.message });
     }
