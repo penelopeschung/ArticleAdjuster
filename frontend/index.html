@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- linking the outside references -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spanish Article Adapter</title>
     <link rel="stylesheet" href="main.css">
-    <script src="interact.js" defer></script> </head>
+    <script src="interact.js" defer></script> 
 </head>
 <body>
 
@@ -18,20 +17,20 @@
 
         <div class="url-fetch-container">
             <input type="url" id="url-input" placeholder="Enter article URL...">
-            <button id="fetch-btn">Fetch Article</button>
+            <button id="fetch-btn" type="button">Fetch Article</button>
         </div>
 
         <textarea id="text-input" placeholder="Paste or type your Spanish article here..."></textarea>
-        <!-- different buttons for the ACTFL levels -->
+        
         <div id="level-buttons">
-            <button class="level-btn" data-level="Novice Low">Novice Low</button>
-            <button class="level-btn" data-level="Novice High">Novice High</button>
-            <button class="level-btn" data-level="Intermediate Low">Intermediate Low</button>
-            <button class="level-btn" data-level="Intermediate High">Intermediate High</button>
-            <button class="level-btn" data-level="Advanced Low">Advanced Low</button>
-            <button class="level-btn" data-level="Advanced High">Advanced High</button>
+            <button class="level-btn" data-level="Novice Low" type="button">Novice Low</button>
+            <button class="level-btn" data-level="Novice High" type="button">Novice High</button>
+            <button class="level-btn" data-level="Intermediate Low" type="button">Intermediate Low</button>
+            <button class="level-btn" data-level="Intermediate High" type="button">Intermediate High</button>
+            <button class="level-btn" data-level="Advanced Low" type="button">Advanced Low</button>
+            <button class="level-btn" data-level="Advanced High" type="button">Advanced High</button>
         </div>
-        <!-- where  adapted text is displayed -->
+        
         <h2>Adapted Text:</h2>
         <div id="output-container">
             <div id="text-output"></div>
@@ -39,5 +38,4 @@
     </div>
 
 </body>
-
 </html>

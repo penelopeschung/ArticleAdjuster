@@ -1,5 +1,5 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: "Lucida Console", Monaco, monospace;
     background-color: #ffd1a1;
     color: #333;
     display: flex;
