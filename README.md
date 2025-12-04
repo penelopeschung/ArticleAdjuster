@@ -22,3 +22,8 @@ Right click index.html and select "Open With Live Server"
 Open new terminal 
 cd Article Adjuster
 npx cypress run
+
+Rate Limits:
+Gemini 2.5 Pro:	2RPM, 125,000 TPM, 50 RPD
+Gemini 2.5 Flash: 10 RPM, 250,000 TPM, 250 RPD
+Vercel: https://vercel.com/docs/limits
