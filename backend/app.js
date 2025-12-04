@@ -9,11 +9,25 @@ const app = express();
 
 // --- Configuration ---
 const allowedOrigins = [
-    process.env.FRONTEND_URL || 'https://article-adjuster-4447a3.netlify.app',
-    'http://127.0.0.1:5500', 
-    'http://localhost:5500'
+    'http://127.0.0.1:5500',
+    'http://localhost:5500',
+    'http://localhost:8000',
+    'https://article-adjuster.vercel.app' // <--- ADD YOUR VERCEL DOMAIN HERE
 ];
 
+app.use(express.json());
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
 app.use(express.json());
 app.use(cors({
     origin: function (origin, callback) {
