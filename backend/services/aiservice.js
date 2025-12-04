@@ -68,7 +68,7 @@ async function adaptText(text, level) {
     } catch (error) {
         // Fallback logic
         if (error.status === 'RESOURCE_EXHAUSTED' || (error.message && error.message.includes('429'))) {
-            console.warn('Rate limit hit. Using Flash model.');
+            console.warn('The rate limit for the more comprehensive model was hit so model will be switched to a quicker flash version. Please try again in a couple minutes if you would like the higher quality version.');
             result = await flashModel.generateContent(prompt);
         } else {
             throw error;

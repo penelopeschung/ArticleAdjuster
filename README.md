@@ -7,11 +7,18 @@ User Needs Statement: Yolanda, a Spanish teacher at Nueva, wants a website that 
 To use the website, the user first copies and pastes their text into the box. This article adjuster works by using a Gemini 2.5pro API, and prompting it for different ACTFL levels depening on the button the user clicks. It then returns the adapted text below. 
 
 Notes:
-1. I have included only levels from novice - advanced, excluding the superior and distinguished levels because from what I've read in the ACTFL guide, people who are at these levels should be able to read a normal article without needing adaptation.
-2. I also excluded the mid tier, only including low and high because I feel like there wouldn't be clear enough of a distinction between them. But, I could always add it too. 
+The scraping function works but not completely. It doesn't work on certain websites, especially government or paywall websites which makes sense and is fine. In that case, users can just copy paste their article directly. However, sometimes the scraper works, but scrapes wrong parts of the website like random links or characters which then make their way into the summarized version. In this case, the user should copy paste the article directly again, but it isn't ideal. 
 
-Bugs/Improvements:
-1. The link box where users can copy paste a link in doesn't work right now and is just a placeholder. Ideally, I want users to be able to copy paste the link of an article and then for it to be scraped and converted to text. I tried using different ai like gemini and chatgpt to scrape the websites, but it didn't work very well because there are a lot of bot blockers. 
-2. I'd like for there to be an option to have the website in Spanish or English or to switch between the two. That way, a more advanced Spanish student can use the website in Spanish, but a Spanish 1 student could use it in English.
+Testing Instructions: 
+jest - 
+Go to terminal
+Change the directory to Article Adjuster backend
+npm test
 
-
+cypress - 
+cd backend
+npm start
+Right click index.html and select "Open With Live Server"
+Open new terminal 
+cd Article Adjuster
+npx cypress run
