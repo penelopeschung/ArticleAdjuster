@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const proModel = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
 const flashModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-// Your prompt library
+//  prompt library
 const promptLibrary = {
     "Novice Low": (text) => `Adapt the following Spanish text for a Novice Low (ACTFL) learner.
        - Use only the most common, high-frequency words.
