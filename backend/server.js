@@ -2,7 +2,7 @@
 const app = require('./app');
 const PORT = process.env.PORT || 8000;
 
-// 1. Export the app for Vercel (Serverless)
+// export app for serverless vercel
 module.exports = app;
 
 // 2. Only start the server manually if we are running LOCALLY

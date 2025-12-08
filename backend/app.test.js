@@ -7,14 +7,14 @@ describe('App Integration Tests', () => {
     let mockScrapeArticle;
 
     beforeEach(() => {
-        // 1. Reset modules to clear the cache
+        // reset modules to clear the cache
         jest.resetModules();
 
-        // 2. Create the mock functions
+        // create the mock functions
         mockAdaptText = jest.fn();
         mockScrapeArticle = jest.fn();
 
-        // 3. Define the mocks BEFORE importing the app
+        // define the mocks BEFORE importing the app
         jest.doMock('./services/aiservice', () => ({
             adaptText: mockAdaptText
         }));
@@ -23,11 +23,11 @@ describe('App Integration Tests', () => {
             scrapeArticle: mockScrapeArticle
         }));
 
-        // 4. Import the app (it will now use the mocks we just defined)
+        // import the app (it will now use the mocks we just defined)
         app = require('./app');
     });
 
-    // --- ADAPT TESTS ---
+    // --- adapt tests ---
     describe('POST /api/adapt', () => {
         test('should return 200 and adapted text on success', async () => {
             mockAdaptText.mockResolvedValue('Mocked Adapted Text');
@@ -56,7 +56,7 @@ describe('App Integration Tests', () => {
         });
     });
 
-    // --- SCRAPE TESTS ---
+    // --- scrape tests ---
     describe('POST /api/scrape', () => {
         test('should return 200 and scraped text on success', async () => {
             mockScrapeArticle.mockResolvedValue('Scraped Article Content');

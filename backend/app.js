@@ -7,18 +7,18 @@ const { scrapeArticle } = require('./services/scraperservice'); // <--- Import S
 
 const app = express();
 
-// --- Configuration ---
+// --- configuration ---
 const allowedOrigins = [
     'http://127.0.0.1:5500',
     'http://localhost:5500',
     'http://localhost:8000',
-    'https://article-adjuster.vercel.app' // <--- ADD YOUR VERCEL DOMAIN HERE
+    'https://article-adjuster.vercel.app' 
 ];
 
 app.use(express.json());
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
+        // allowing requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         
         if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('vercel.app')) {
@@ -39,9 +39,8 @@ app.use(cors({
     }
 }));
 
-// --- Routes ---
 
-// 1. Adapt Text Route
+// adapt Text Route
 app.post('/api/adapt', async (req, res) => {
     try {
         const { text, level } = req.body;
@@ -56,7 +55,7 @@ app.post('/api/adapt', async (req, res) => {
     }
 });
 
-// 2. Scrape Route (ADDED BACK IN)
+// scrape route 
 app.post('/api/scrape', async (req, res) => {
     try {
         const { url } = req.body;

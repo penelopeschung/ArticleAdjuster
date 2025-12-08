@@ -1,14 +1,12 @@
-// --- Configuration ---
+// --- configuration ---
 
-// Check if we are running locally (Live Server usually runs on 127.0.0.1 or localhost)
+// check if we are running locally (Live Server usually runs on 127.0.0.1 or localhost)
 const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
-// If local, use localhost:8000. If production (Vercel), use empty string (relative path).
 const API_BASE_URL = isLocal ? 'http://localhost:8000' : ''; 
 
 // --- DOM element references ---
 const fetchBtn = document.getElementById('fetch-btn');
-// ... rest of your code ...
 const urlInput = document.getElementById('url-input');
 const textInput = document.getElementById('text-input');
 const textOutput = document.getElementById('text-output');
